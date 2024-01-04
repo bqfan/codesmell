@@ -15,7 +15,7 @@ fake_db = {
     "users": []
 }
 
-@app.post("/data")
+@app.post("/data", status_code=201)
 async def create_data(payload: Annotated[
         Payload, Body(openapi_examples={
                 "items": {

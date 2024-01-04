@@ -9,7 +9,7 @@ fake_db = {
     "users": []
 }
 
-@app.post("/data/items")
+@app.post("/data/items", status_code=201)
 async def create_item(payload: Annotated[str, Body(examples=["item1"])]):
     """Create an item in the 'items' resource"""
     fake_db["items"].append(payload)
@@ -21,7 +21,7 @@ async def get_items():
     """Get items in the 'items' resource"""
     return {"items": fake_db["items"]}
 
-@app.post("/data/users")
+@app.post("/data/users", status_code=201)
 async def create_user(payload: Annotated[str, Body(examples=["user1"])]):
     """Create a user in the 'users' resource"""
     fake_db["users"].append(payload)
