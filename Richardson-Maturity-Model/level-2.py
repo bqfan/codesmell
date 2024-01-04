@@ -1,5 +1,5 @@
 from typing import Annotated
-from fastapi import Body, FastAPI, HTTPException
+from fastapi import Body, FastAPI
 
 app = FastAPI()
 

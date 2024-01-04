@@ -1,5 +1,4 @@
-from ctypes import Union
-from typing import Annotated, Optional
+from typing import Annotated
 from fastapi import Body, FastAPI, HTTPException
 from pydantic import BaseModel
 
