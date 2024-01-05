@@ -1,6 +1,6 @@
-from fastapi import FastAPI, HTTPException, Body
+from fastapi import FastAPI, Response, HTTPException, Body
 from pydantic import BaseModel
-from typing import Annotated
+from typing import Annotated, List
 
 app = FastAPI()
 
@@ -14,10 +14,11 @@ fake_db = {
     "users": []
 }
 
-@app.get("/items")
-async def get_items():
-    """Retrieve a list of items"""
-    return {"items": fake_db["items"]}
+@app.get("/items", response_model=List[str])
+async def get_items(response: Response):
+    """Retrieve a list of items with hypermedia links"""
+    response.headers["Link"] = f"</users>; rel='users'"
+    return fake_db["items"]
 
 @app.post("/items", status_code=201)
 async def create_item(payload: Annotated[
@@ -48,10 +49,11 @@ async def create_item(payload: Annotated[
 
     return {"resource": "items", "item_created": payload.items}
 
-@app.get("/users")
-async def get_users():
-    """Retrieve a list of users"""
-    return {"users": fake_db["users"]}
+@app.get("/users", response_model=List[str])
+async def get_users(response: Response):
+    """Retrieve a list of users with hypermedia links"""
+    response.headers["Link"] = f"</items>; rel='items'"
+    return fake_db["users"]
 
 @app.post("/users", status_code=201)
 async def create_user(payload: Annotated[
@@ -81,3 +83,4 @@ async def create_user(payload: Annotated[
         raise HTTPException(status_code=404, detail="Resource not found")   
 
     return {"resource": "users", "user_created": payload.users}
+

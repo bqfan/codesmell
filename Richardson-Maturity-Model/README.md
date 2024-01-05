@@ -35,12 +35,21 @@ source ./venv/bin/activate
 pip install -r requirements.txt
 ```
 2. start uvicorn:
+Maturity level 0:
 ```
 uvicorn level-0:app --host 0.0.0.0 --port 8080 --reload
 ```
-or
+Maturity level 1:
+```
+uvicorn level-1:app --host 0.0.0.0 --port 8080 --reload
+```
+Maturity level 2:
 ```
 uvicorn level-2:app --host 0.0.0.0 --port 8080 --reload
+```
+Maturity level 3:
+```
+uvicorn level-3:app --host 0.0.0.0 --port 8080 --reload
 ```
 3. access OpenAPI docs:
 ```
