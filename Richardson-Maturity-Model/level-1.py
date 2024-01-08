@@ -3,9 +3,6 @@ from pydantic import BaseModel
 from typing import Annotated
 
 app = FastAPI()
-class Payload(BaseModel):
-    items: str | None = None
-    users: str | None = None
 
 # Example in-memory data (pretending to be a database)
 fake_db = {
@@ -14,59 +11,21 @@ fake_db = {
 }
 
 @app.post("/items", status_code=201)
-async def create_item(payload: Annotated[
-        Payload, Body(openapi_examples={
-                "items": {
-                    "summary": "payload to create an item",
-                    "description": "Create an item.",
-                    "value": {
-                        "items": "item1",
-                    },
-                },
-                "invalid": {
-                    "summary": "Invalid data is rejected with an error",
-                    "description": "Invalid payload",
-                    "value": {
-                        "item": 123
-                    },
-                },
-            },
-        ),
-    ],
-):
+async def create_item(payload: dict):
     """Create data for a specified resource"""
-    if payload.items:
-        fake_db["items"].append(payload.items)
+    if "items" in payload:
+        fake_db["items"].append(payload["items"])
     else:
         raise HTTPException(status_code=404, detail="Resource not found")   
 
-    return {"resource": "items", "item_created": payload.items}
+    return {"resource": "items", "item_created": payload["items"]}
 
 @app.post("/users", status_code=201)
-async def create_user(payload: Annotated[
-        Payload, Body(openapi_examples={
-                "users": {
-                    "summary": "payload to create an user",
-                    "description": "Create an user",
-                    "value": {
-                        "users": "user1",
-                    },
-                },
-                "invalid": {
-                    "summary": "Invalid data is rejected with an error",
-                    "description": "Invalid payload",
-                    "value": {
-                        "user": 123
-                    },
-                },
-            },
-        ),
-    ],
-):
+async def create_user(payload: dict):
     """Create data for a specified resource"""
-    if payload.users:
-        fake_db["users"].append(payload.users)
+    if "users" in payload:
+        fake_db["users"].append(payload["users"])
     else:
         raise HTTPException(status_code=404, detail="Resource not found")   
 
-    return {"resource": "users", "user_created": payload.users}
+    return {"resource": "users", "user_created": payload["users"]}
