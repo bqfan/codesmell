@@ -1,0 +1,3 @@
+git+https://github.com/Dmitri-Sintsov/django-organizations-permissions.git
+# To use Django admin templates in user UI:
+django-apptemplates

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if request.user.is_authenticated %}
+        <span>You are logged in as {{ user }}</span>
+        <ul>
+            {% if organization == 'Org 1' or request.user.is_superuser %}
+                <li><a href="{% url 'feature1' %}">Feature 1</a></li>
+            {% endif %}
+            {% if organization == 'Org 2' or request.user.is_superuser %}
+                <li><a href="{% url 'feature2' %}">Feature 2</a></li>
+            {% endif %}
+            {% if request.user.is_superuser %}
+                <li><a href="{% url 'feature3' %}">Feature 3</a></li>
+            {% endif %}
+        </ul>
+    {% endif %}
+{% endblock content %}
