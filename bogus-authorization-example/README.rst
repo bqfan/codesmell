@@ -14,3 +14,9 @@ Before running::
     python3 manage.py makemigrations org_permissions
     python3 manage.py migrate
     python3 manage.py create_organizations_permissions
+
+    python manage.py runserver
+
+    admin/password123:)
+    user1/password123:)
+    user2/password123:)
